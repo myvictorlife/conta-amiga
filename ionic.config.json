@@ -1,0 +1,7 @@
+{
+  "name": "viajantes",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
