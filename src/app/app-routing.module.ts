@@ -8,10 +8,10 @@ const routes: Routes = [
   },
   {
     path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./pages/tabs/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'forgot-password',
+    path: 'auth/forgot-password',
     loadChildren: () => import('./pages/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
   {
@@ -27,7 +27,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
   },
   {
-    path: 'signup',
+    path: 'auth/signup',
     loadChildren: () => import('./pages/signup/signup.module').then( m => m.SignupPageModule)
   }
 ];

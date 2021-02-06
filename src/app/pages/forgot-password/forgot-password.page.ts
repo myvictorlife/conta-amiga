@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-forgot-password',
@@ -7,9 +10,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForgotPasswordPage implements OnInit {
 
-  constructor() { }
+  forgotPasswordForm: FormGroup;
 
-  ngOnInit() {
+  validation_messages = {
+    'email': [
+      { type: 'required', message: 'Email is required.' },
+      { type: 'pattern', message: 'Enter a valid email.' }
+    ]
+  };
+
+  constructor(
+    public router: Router,
+    public menu: MenuController
+  ) {
+    this.forgotPasswordForm = new FormGroup({
+      'email': new FormControl('test@test.com', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ]))
+    });
+  }
+
+  ngOnInit(): void {
+    this.menu.enable(false);
+  }
+
+  recoverPassword(): void {
+    console.log(this.forgotPasswordForm.value);
+    this.router.navigate(['']);
   }
 
 }
