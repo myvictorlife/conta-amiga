@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/http-requests/api/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     public router: Router,
-    public menu: MenuController
+    public menu: MenuController,
+    private authService: AuthService
   ) {
     this.loginForm = new FormGroup({
       'email': new FormControl('test@test.com', Validators.compose([
@@ -43,13 +45,24 @@ export class LoginPage implements OnInit {
     this.menu.enable(false);
   }
 
-  doLogin(): void {
-    console.log('do Log In');
-    this.router.navigate(['tabs']);
+  async doLogin() {
+    const user = this.loginForm.getRawValue();
+    try {
+      const response = await this.authService.postLogin({
+        loader: [true],
+        user
+      });
+      console.log(response);
+      this.router.navigate(['tabs']);
+      // this.tokenStorageService.set(token);
+    } catch (e) {
+      console.warn('LoginPage (login): ', e);
+    }
   }
 
   goToForgotPassword(): void {
     console.log('redirect to forgot-password page');
+    this.router.navigate(['forgot-password']);
   }
 
 }
