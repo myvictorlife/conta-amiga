@@ -31,6 +31,17 @@ public handleErrorCallback = (error: Response, params: any, callback: any) => {
         enableBackdropDismiss: true,
         error: error,
       });
+    } else {
+      this.alert.showBasic({
+        title: 'Error ' + error.status,
+        subTitle: 'Sorry, try later...',
+        button: {
+            text: 'OK',
+            callback: () => { },
+        },
+        enableBackdropDismiss: true,
+        error: error,
+      });
     }
     return Observable.throw(error);
   }
