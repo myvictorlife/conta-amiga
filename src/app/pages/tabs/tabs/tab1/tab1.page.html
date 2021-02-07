@@ -13,5 +13,29 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Crie a sua despesa"></app-explore-container>
+  <div *ngIf="!hideSelectTravel">
+    <h4 class="ion-padding">Selecione a sua viagem</h4>
+    <ion-card *ngFor="let travel of travels">
+      <ion-card-content (click)="selectTravel(travel)">
+        <span>{{ travel.title }} </span><br/>
+        <span>{{ travel.start_date }} </span> to
+        <span>{{ travel.end_date }} </span>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="hideSelectTravel && travelSelected">
+    <ion-card (click)="cleanTravelSelected()">
+      <ion-card-content>
+        <span>{{ travelSelected.title }} </span><br/>
+        <span>{{ travelSelected.start_date }} </span> to
+        <span>{{ travelSelected.end_date }} </span>
+
+        <ion-button color="danger">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
 </ion-content>

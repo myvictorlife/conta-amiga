@@ -13,5 +13,14 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Minha Lista de Viagens"></app-explore-container>
+  <div>
+    <h4 class="ion-padding">Minhas Viagens</h4>
+    <ion-card *ngFor="let travel of travels">
+      <ion-card-content>
+        <span>{{ travel.title }} </span><br/>
+        <span>{{ travel.start_date }} </span> to
+        <span>{{ travel.end_date }} </span>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
