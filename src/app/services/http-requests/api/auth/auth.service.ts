@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClientService } from '../../wrappers/http-client/http-client.service';
-import { AppConstants } from '../../../constants/app.constants';
-import { LoadingService } from '../../wrappers/loading/loading.service';
-import { ErrorHandlingService } from '../error/error-handling/error-handling.service';
+import { HttpClientService } from '../../../wrappers/http-client/http-client.service';
+import { AppConstants } from '../../../../constants/app.constants';
+import { LoadingService } from '../../../wrappers/loading/loading.service';
+import { ErrorHandlingService } from '../../error/error-handling/error-handling.service';
 @Injectable({
   providedIn: 'root'
 })

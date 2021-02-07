@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
-import { AuthService } from 'src/app/services/http-requests/api/auth.service';
+import { AuthService } from 'src/app/services/http-requests/api/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -53,11 +53,15 @@ export class LoginPage implements OnInit {
         user
       });
       console.log(response);
-      this.router.navigate(['tabs']);
+      this.goToHome();
       // this.tokenStorageService.set(token);
     } catch (e) {
       console.warn('LoginPage (login): ', e);
     }
+  }
+
+  goToHome() {
+    this.router.navigate(['tabs']);
   }
 
   goToForgotPassword(): void {
