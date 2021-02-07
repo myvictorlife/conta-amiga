@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ travel?.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-content>
+      <span>{{ travel.title }} </span><br/>
+      <span>{{ travel.start_date }} </span> to
+      <span>{{ travel.end_date }} </span>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

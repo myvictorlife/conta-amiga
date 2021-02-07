@@ -13,5 +13,15 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Meu Perfil"></app-explore-container>
+  <ion-row class="user-details-section">
+    <ion-list>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-img [src]="'https://tinypng.com/images/apng/panda-waving-2x.png'"></ion-img>
+        </ion-thumbnail>
+        <ion-label>{{profile.name}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-row>
+
 </ion-content>

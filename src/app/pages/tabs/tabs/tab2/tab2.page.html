@@ -16,7 +16,7 @@
   <div>
     <h4 class="ion-padding">Minhas Viagens</h4>
     <ion-card *ngFor="let travel of travels">
-      <ion-card-content>
+      <ion-card-content (click)="redirectToTravelDetails(travel)">
         <span>{{ travel.title }} </span><br/>
         <span>{{ travel.start_date }} </span> to
         <span>{{ travel.end_date }} </span>
