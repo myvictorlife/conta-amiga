@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
     private authService: AuthService
   ) {
     this.loginForm = new FormGroup({
-      'email': new FormControl('test@test.com', Validators.compose([
+      'email': new FormControl('victorcmggg@gmail.com', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),

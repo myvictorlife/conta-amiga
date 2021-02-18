@@ -1,7 +1,7 @@
 export class AppConstants {
 
     public static ENV = {
-        API_URL: 'http://friendaccountapi-env-1.eba-r729bfmf.us-east-2.elasticbeanstalk.com',
+        API_URL: 'https://friendapi.us-east-2.elasticbeanstalk.com',
         APP_ID: 'com.viajantes',
         APP_NAME: 'Viajantes',
         APP_DESCRIPTION: 'App para Viajantes',
