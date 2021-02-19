@@ -21,18 +21,21 @@ export class ExpensesService {
     this.handleError = error.handleErrorCallback;
   }
 
+  get() {
+    return Expenses.default;
+  }
   async getUserInfo(params: { loader?: any }) {
-    this.loading.showLoading(params.loader[0], params.loader[1]);
+    await this.loading.showLoading(params.loader[0], params.loader[1]);
     let data: any = null;
     try {
       const token = localStorage.getItem(this.appConstants.STORAGE_NAMES.USER_TOKEN);
       data = await this.http.get(AppConstants.API_ENDPOINTS.PRINCIPAL, {}, { headers: new HttpHeaders({ 'x-token': token }) });
     } catch (error) {
       console.warn('AccountService - createUser: ', error);
-      data = this.handleError(error, params.loader[0]);
-      this.loading.showLoading(false);
+      data = await this.handleError(error, params.loader[0]);
+      await this.loading.showLoading(false);
     } finally {
-      this.loading.showLoading(false);
+      await this.loading.showLoading(false);
     }
     return data;
   }
