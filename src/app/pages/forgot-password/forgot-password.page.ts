@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { MenuController, ToastController } from '@ionic/angular';
 import { AccountService } from 'src/app/services/http-requests/api/account/account.service';
 
 @Component({
@@ -23,7 +23,8 @@ export class ForgotPasswordPage implements OnInit {
   constructor(
     public router: Router,
     public menu: MenuController,
-    private readonly accountService: AccountService
+    private readonly accountService: AccountService,
+    public toastController: ToastController
   ) {
     this.forgotPasswordForm = new FormGroup({
       'email': new FormControl('', Validators.compose([
@@ -43,7 +44,16 @@ export class ForgotPasswordPage implements OnInit {
       email, loader: [true]
     });
     console.log(response);
+    this.presentToast();
     this.router.navigate(['']);
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Foi enviado uma nova senha para o seu email.',
+      duration: 2000
+    });
+    toast.present();
   }
 
 }

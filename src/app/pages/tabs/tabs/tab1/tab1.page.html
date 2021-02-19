@@ -3,6 +3,7 @@
     <ion-title>
       Despesas
     </ion-title>
+    <ion-icon class="icon-add" (click)="goToExpenses()" name="add" slot="end"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -10,6 +11,7 @@
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Despesas</ion-title>
+      <ion-icon name="people" slot="end"></ion-icon>
     </ion-toolbar>
   </ion-header>
 
@@ -37,5 +39,38 @@
       </ion-card-content>
     </ion-card>
   </div>
+
+  <div *ngIf="hideSelectTravel && travelSelected">
+    <h4 class="ion-padding">Despesa: </h4>
+    <ion-card>
+      <ion-card-content (click)="addExpenseTitle()">
+        <span>{{ newExpense.title }} </span>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="hideSelectTravel && travelSelected">
+    <h4 class="ion-padding">Descrição: </h4>
+    <ion-card>
+      <ion-card-content (click)="addExpenseDescription()">
+        <span>{{ newExpense.description }} </span>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="hideSelectTravel && travelSelected">
+    <h4 class="ion-padding">Pagantes: </h4>
+    <ion-card>
+      <ion-card-content (click)="addPersonToPay()">
+        <div *ngIf="newExpense.person_to_pay">
+          <div *ngFor="const person of newExpense.person_to_pay">
+            <span>{{ person.name }}</span>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  {{ newExpense | json }}
 
 </ion-content>
