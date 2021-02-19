@@ -14,7 +14,8 @@ export class AppConstants {
     // Endpoints
     public static API_ENDPOINTS = {
         LOGIN:  'login',
-        SAVE_USER: 'users',
+        CREATE_USER: 'users',
+        PRINCIPAL: 'principal',
     };
 
     public static STORAGE_NAMES = {

@@ -3,14 +3,15 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/http-requests/api/auth/auth.service';
-
+import { AppConstants } from '../../constants/app.constants';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
+  
+  public appConstants = AppConstants;
   loginForm: FormGroup;
 
   validation_messages = {
@@ -43,6 +44,10 @@ export class LoginPage implements OnInit {
 
   ngOnInit(): void {
     this.menu.enable(false);
+    const token = localStorage.getItem(this.appConstants.STORAGE_NAMES.USER_TOKEN);
+    if (token) {
+      this.goToHome();
+    }
   }
 
   async doLogin() {
@@ -52,9 +57,8 @@ export class LoginPage implements OnInit {
         loader: [true],
         user
       });
-      console.log(response);
+      localStorage.setItem(this.appConstants.STORAGE_NAMES.USER_TOKEN, response.data.dsToken);
       this.goToHome();
-      // this.tokenStorageService.set(token);
     } catch (e) {
       console.warn('LoginPage (login): ', e);
     }

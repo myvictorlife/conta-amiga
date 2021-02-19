@@ -14,10 +14,11 @@ export class Tab1Page {
   travelSelected: any;
   constructor(public expensesService: ExpensesService) { }
 
-  ngOnInit() {
-    const result = this.expensesService.get();
-    this.travels = result.data.travels;
-    this.myUser = result.data.user;
+  async ngOnInit() {
+    const result = await this.expensesService.getUserInfo({ loader: [true] });
+    debugger;
+    // this.travels = result.data.travels;
+    // this.myUser = result.data.user;
   }
 
   selectTravel(travel) {

@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalController, MenuController } from '@ionic/angular';
 import { PasswordValidator } from '../validators/password.validator';
+import { AccountService } from 'src/app/services/http-requests/api/account/account.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
@@ -17,6 +18,12 @@ export class SignupPage implements OnInit {
     'email': [
       { type: 'required', message: 'Email is required.' },
       { type: 'pattern', message: 'Enter a valid email.' }
+    ],
+    'name': [
+      { type: 'required', message: 'Name is required.' }
+    ],
+    'phone': [
+      { type: 'required', message: 'Phone is required.' }
     ],
     'password': [
       { type: 'required', message: 'Password is required.' },
@@ -33,7 +40,8 @@ export class SignupPage implements OnInit {
   constructor(
     public router: Router,
     public modalController: ModalController,
-    public menu: MenuController
+    public menu: MenuController,
+    private accountService: AccountService
   ) {
     this.matching_passwords_group = new FormGroup({
       'password': new FormControl('', Validators.compose([
@@ -46,10 +54,12 @@ export class SignupPage implements OnInit {
     });
 
     this.signupForm = new FormGroup({
-      'email': new FormControl('test@test.com', Validators.compose([
+      'email': new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
+      'name': new FormControl('', Validators.required),
+      'phone': new FormControl('', Validators.required),
       'matching_passwords': this.matching_passwords_group
     });
   }
@@ -58,24 +68,23 @@ export class SignupPage implements OnInit {
     this.menu.enable(false);
   }
 
-  doSignup(): void {
-    console.log('do sign up');
-    this.router.navigate(['app/categories']);
+  async doSignup() {
+    const user = this.signupForm.getRawValue();
+    user.password = user.matching_passwords.password;
+    delete user.matching_passwords;
+    try {
+      const response = await this.accountService.createUser({
+        loader: [true],
+        user
+      });
+      this.goToLogin();
+    } catch (e) {
+      console.warn('LoginPage (login): ', e);
+    }
   }
 
-  doFacebookSignup(): void {
-    console.log('facebook signup');
-    this.router.navigate(['app/categories']);
-  }
-
-  doGoogleSignup(): void {
-    console.log('google signup');
-    this.router.navigate(['app/categories']);
-  }
-
-  doTwitterSignup(): void {
-    console.log('twitter signup');
-    this.router.navigate(['app/categories']);
+  goToLogin() {
+    this.router.navigate(['']);
   }
 
 }

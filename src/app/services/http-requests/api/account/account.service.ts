@@ -3,12 +3,11 @@ import { HttpClientService } from '../../../wrappers/http-client/http-client.ser
 import { AppConstants } from '../../../../constants/app.constants';
 import { LoadingService } from '../../../wrappers/loading/loading.service';
 import { ErrorHandlingService } from '../../error/error-handling/error-handling.service';
-import * as Expenses from '../../mocks/expenses.mock';
-import { HttpHeaders } from '@angular/common/http';
+
 @Injectable({
   providedIn: 'root'
 })
-export class ExpensesService {
+export class AccountService {
 
   public appConstants = AppConstants;
   // tslint:disable-next-line:member-ordering
@@ -21,18 +20,19 @@ export class ExpensesService {
     this.handleError = error.handleErrorCallback;
   }
 
-  async getUserInfo(params: { loader?: any }) {
+  async createUser(params: { user: any, loader?: any }) {
     this.loading.showLoading(params.loader[0], params.loader[1]);
     let data: any = null;
     try {
-      const token = localStorage.getItem(this.appConstants.STORAGE_NAMES.USER_TOKEN);
-      data = await this.http.get(AppConstants.API_ENDPOINTS.PRINCIPAL, {}, { headers: new HttpHeaders({ 'x-token': token }) });
+        const body = params.user;
+        data = await this.http.post(AppConstants.API_ENDPOINTS.CREATE_USER, body);
     } catch (error) {
-      console.warn('AccountService - createUser: ', error);
-      data = this.handleError(error, params.loader[0]);
-      this.loading.showLoading(false);
+        console.warn('AccountService - createUser: ', error);
+        data = this.handleError(error, params.loader[0]);
+        debugger;
+        this.loading.showLoading(false);
     } finally {
-      this.loading.showLoading(false);
+        this.loading.showLoading(false);
     }
     return data;
   }
