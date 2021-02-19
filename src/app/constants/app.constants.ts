@@ -16,6 +16,7 @@ export class AppConstants {
         LOGIN:  'login',
         CREATE_USER: 'users',
         PRINCIPAL: 'principal',
+        RECOVERY_PASSWORD: 'recovery-password',
     };
 
     public static STORAGE_NAMES = {

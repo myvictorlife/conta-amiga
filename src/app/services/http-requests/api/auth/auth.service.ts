@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   async postLogin(params: { user: any, loader?: any }) {
-    this.loading.showLoading(params.loader[0], params.loader[1]);
+    await this.loading.showLoading(params.loader[0], params.loader[1]);
     let data: any = null;
     try {
         const body = {
@@ -30,11 +30,10 @@ export class AuthService {
         data = await this.http.post(AppConstants.API_ENDPOINTS.LOGIN, body);
     } catch (error) {
         console.warn('AuthService - postLogin: ', error);
-        data = this.handleError(error, params.loader[0]);
-        debugger;
-        this.loading.showLoading(false);
+        data = await this.handleError(error, params.loader[0]);
+        await this.loading.showLoading(false);
     } finally {
-        this.loading.showLoading(false);
+      await this.loading.showLoading(false);
     }
     return data;
   }

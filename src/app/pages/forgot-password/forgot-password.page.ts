@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { AccountService } from 'src/app/services/http-requests/api/account/account.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -21,10 +22,11 @@ export class ForgotPasswordPage implements OnInit {
 
   constructor(
     public router: Router,
-    public menu: MenuController
+    public menu: MenuController,
+    private readonly accountService: AccountService
   ) {
     this.forgotPasswordForm = new FormGroup({
-      'email': new FormControl('test@test.com', Validators.compose([
+      'email': new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ]))
@@ -35,8 +37,12 @@ export class ForgotPasswordPage implements OnInit {
     this.menu.enable(false);
   }
 
-  recoverPassword(): void {
-    console.log(this.forgotPasswordForm.value);
+  async recoverPassword() {
+    const email = this.forgotPasswordForm.value;
+    const response = await this.accountService.recoverPassword({
+      email, loader: [true]
+    });
+    console.log(response);
     this.router.navigate(['']);
   }
 
