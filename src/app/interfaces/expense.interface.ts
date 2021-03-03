@@ -1,13 +1,11 @@
 
 export interface Expense {
-    travel: Travel;
+    idTravel: Travel;
+    payingUser: string;
     title: string;
     description: string;
-    person_to_pay: Array<PersonToPay>;
-    person_not_pay: Array<PersonNotPay>;
-    split_to_everyone: boolean;
-    total: number;
-    date: Date;
+    usersParticipant: Array<UsersParticipant>;
+    value: string;
 }
 
 export interface Travel {
@@ -15,11 +13,9 @@ export interface Travel {
     name: string;
 }
 
-export interface PersonToPay {
-    userId: string;
-    name: string;
+export interface UsersParticipant {
+    idUser: string;
     value: number;
-    payment_type: string;
 }
 
 export interface PersonNotPay {

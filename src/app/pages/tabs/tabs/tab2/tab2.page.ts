@@ -15,9 +15,10 @@ export class Tab2Page {
     private router: Router
   ) { }
 
-  ngOnInit() {
-    const result = this.expensesService.get();
-    this.travels = result.data.travels;
+  async ngOnInit() {
+    this.travels = await this.expensesService.getTravels({
+      loader: true
+    });
   }
 
   redirectToTravelDetails(travel) {

@@ -3,7 +3,7 @@
     <ion-title>
       Despesas
     </ion-title>
-    <ion-icon class="icon-add" (click)="goToExpenses()" name="add" slot="end"></ion-icon>
+    <ion-icon class="icon-add" (click)="createNewExpense()" name="add" slot="end"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -15,13 +15,13 @@
     </ion-toolbar>
   </ion-header>
 
-  <div *ngIf="!hideSelectTravel">
+  <div *ngIf="!hideSelectTravel && travels">
     <h4 class="ion-padding">Selecione a sua viagem</h4>
     <ion-card *ngFor="let travel of travels">
       <ion-card-content (click)="selectTravel(travel)">
         <span>{{ travel.title }} </span><br/>
-        <span>{{ travel.start_date }} </span> to
-        <span>{{ travel.end_date }} </span>
+        <span>{{ travel.startDate |  date:'dd mm yyyy' }}</span> to
+        <span>{{ travel.dateEnd | date:'dd mm yyyy' }} </span>
       </ion-card-content>
     </ion-card>
   </div>
@@ -30,8 +30,8 @@
     <ion-card (click)="cleanTravelSelected()">
       <ion-card-content>
         <span>{{ travelSelected.title }} </span><br/>
-        <span>{{ travelSelected.start_date }} </span> to
-        <span>{{ travelSelected.end_date }} </span>
+        <span>{{ travelSelected.startDate }} </span> to
+        <span>{{ travelSelected.endDate }} </span>
 
         <ion-button color="danger" slot="end">
           <ion-icon name="trash"></ion-icon>
@@ -44,33 +44,31 @@
     <h4 class="ion-padding">Despesa: </h4>
     <ion-card>
       <ion-card-content (click)="addExpenseTitle()">
-        <span>{{ newExpense.title }} </span>
+        <span>{{ newExpense?.title }} </span>
       </ion-card-content>
     </ion-card>
   </div>
 
   <div *ngIf="hideSelectTravel && travelSelected">
-    <h4 class="ion-padding">Descrição: </h4>
+    <h4 class="ion-padding">Total da Despesa: </h4>
     <ion-card>
-      <ion-card-content (click)="addExpenseDescription()">
-        <span>{{ newExpense.description }} </span>
+      <ion-card-content (click)="addExpenseValue()">
+        <span>{{ newExpense?.value }} </span>
       </ion-card-content>
     </ion-card>
   </div>
-
-  <div *ngIf="hideSelectTravel && travelSelected">
-    <h4 class="ion-padding">Pagantes: </h4>
-    <ion-card>
-      <ion-card-content (click)="addPersonToPay()">
-        <div *ngIf="newExpense.person_to_pay">
-          <div *ngFor="const person of newExpense.person_to_pay">
-            <span>{{ person.name }}</span>
-          </div>
-        </div>
-      </ion-card-content>
-    </ion-card>
+  
+  <div *ngIf="hideSelectTravel && participants">
+    <div>
+      <h4 class="ion-padding">Participantes: </h4>
+      <ion-card *ngFor="let person of participants">
+        <ion-card-content (click)="addPersonToPay(person)" [ngClass]="person.isParticipate? 'participant':''">
+            <div>
+              <span>{{ person.name }}</span> 
+              <span *ngIf="!!person.isParticipate"> - R${{ person.value }}</span>
+            </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
-
-  {{ newExpense | json }}
-
 </ion-content>

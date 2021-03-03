@@ -14,8 +14,9 @@ export class Tab1Page {
   travels: any;
   myUser: any;
   hideSelectTravel = false;
-  newExpense = {} as Expense;
+  newExpense: Expense;
   travelSelected: any;
+  participants: any;
   constructor(
     public router: Router,
     public expensesService: ExpensesService,
@@ -23,26 +24,26 @@ export class Tab1Page {
     ) { }
 
   ngOnInit() {
-    const result = this.expensesService.get();
-    this.travels = result.data.travels;
-    this.myUser = result.data.user;
     this.getUserInfo();
   }
 
   async getUserInfo() {
-    const user = await this.expensesService.getUserInfo({ loader: [true] });
-    console.log(user);
+    this.myUser = await this.expensesService.getUserInfo({ loader: [true] });
+    this.travels = this.myUser.travels;
+    if (this.travels.length === 1) {
+      this.selectTravel(this.travels[0]);
+    }
   }
 
   selectTravel(travel) {
+    this.newExpense = {} as Expense;
     this.newExpense.title = 'Adicionar titulo';
-    this.newExpense.description = 'Adicionar descrição';
-    this.newExpense.travel = {
-      id: travel.id,
-      name: travel.name
-    }
+    this.newExpense.idTravel = travel.id;
+    this.newExpense.value = '0,00';
     this.travelSelected = travel;
     this.hideSelectTravel = true;
+    this.participants = travel.participants;
+    this.newExpense.payingUser = this.myUser.id;
   }
 
   cleanTravelSelected() {
@@ -58,27 +59,13 @@ export class Tab1Page {
     this.presentAlertPromptTitle('Nome da Despesa', 'title');
   }
 
-  addExpenseDescription() {
-    this.presentAlertPromptTitle('Descrição da Despesa', 'description');
-  }
-
-  addPersonToPay() {
-    this.newExpense.person_to_pay = [{
-      userId: '11',
-      name: 'Victor Cesar',
-      value: 100,
-      payment_type:  "credit-card"
-    },{
-      userId: '44',
-      name: 'Pablo Ribeir',
-      value: 100,
-      payment_type:  'dinheiro'
-    }];
+  addExpenseValue() {
+    this.presentAlertPromptTitle('Total da despesa', 'value');
   }
 
   async presentAlertPromptTitle(headerName: string, fieldName: string ) {
+
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
       header: headerName,
       inputs: [
         {
@@ -106,6 +93,71 @@ export class Tab1Page {
     });
 
     await alert.present();
+  }
+
+  addPersonToPay(person: any) {
+    if (person.isParticipate) {
+      delete person.isParticipate;
+      delete person.value;
+    } else {
+      this.presentAlertPromptParticipant(`Valor que o ${person.name} deve pagar:`, person);
+    }
+  }
+
+  async presentAlertPromptParticipant(headerName: string, participant: any ) {
+
+    const alert = await this.alertController.create({
+      header: headerName,
+      inputs: [
+        {
+          name: 'title',
+          type: 'text',
+          placeholder: 'Despesa'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+            participant.value = data.title;
+            participant.isParticipate = true;
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async createNewExpense() {
+    if (!this.newExpense.usersParticipant) {
+      this.newExpense.usersParticipant = [];
+    }
+    this.newExpense.usersParticipant = this.getUserParticipant(this.participants);
+    await this.expensesService.createExpense({
+      loader: true,
+      expense: this.newExpense
+    });
+  }
+
+  getUserParticipant(participants: any) {
+    const usersParticipant = [];
+    for(const person of participants) {
+      if (person.isParticipate) {
+        usersParticipant.push({
+          idUser: person.idUser,
+          value: person.value
+        });
+      }
+    }
+    return usersParticipant;
   }
 
 }

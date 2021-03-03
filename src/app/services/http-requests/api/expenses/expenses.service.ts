@@ -24,19 +24,57 @@ export class ExpensesService {
   get() {
     return Expenses.default;
   }
-  async getUserInfo(params: { loader?: any }) {
+
+  async createExpense(params: { loader?: any, expense: any }) {
     await this.loading.showLoading(params.loader[0], params.loader[1]);
-    let data: any = null;
+    let response: any = null;
     try {
       const token = localStorage.getItem(this.appConstants.STORAGE_NAMES.USER_TOKEN);
-      data = await this.http.get(AppConstants.API_ENDPOINTS.PRINCIPAL, {}, { headers: new HttpHeaders({ 'x-token': token }) });
+      const expense = params.expense;
+      response = await this.http.post(AppConstants.API_ENDPOINTS.EXPENSE, expense, { headers: new HttpHeaders({ 'x-token': token }) });
+      response = response.data;
     } catch (error) {
-      console.warn('AccountService - createUser: ', error);
-      data = await this.handleError(error, params.loader[0]);
+      console.warn('ExpenseService - create expense: ', error);
+      response = await this.handleError(error, params.loader[0]);
       await this.loading.showLoading(false);
     } finally {
       await this.loading.showLoading(false);
     }
-    return data;
+    return response;
   }
+
+  async getUserInfo(params: { loader?: any }) {
+    await this.loading.showLoading(params.loader[0], params.loader[1]);
+    let response: any = null;
+    try {
+      const token = localStorage.getItem(this.appConstants.STORAGE_NAMES.USER_TOKEN);
+      response = await this.http.get(AppConstants.API_ENDPOINTS.PRINCIPAL, {}, { headers: new HttpHeaders({ 'x-token': token }) });
+      response = response.data;
+    } catch (error) {
+      console.warn('ExpenseService - getUserInfo: ', error);
+      response = await this.handleError(error, params.loader[0]);
+      await this.loading.showLoading(false);
+    } finally {
+      await this.loading.showLoading(false);
+    }
+    return response;
+  }
+
+  async getTravels(params: { loader?: any }) {
+    await this.loading.showLoading(params.loader[0], params.loader[1]);
+    let response: any = null;
+    try {
+      const token = localStorage.getItem(this.appConstants.STORAGE_NAMES.USER_TOKEN);
+      response = await this.http.get(AppConstants.API_ENDPOINTS.TRAVELS, {}, { headers: new HttpHeaders({ 'x-token': token }) });
+      response = response.data;
+    } catch (error) {
+      console.warn('ExpenseService - get travels: ', error);
+      response = await this.handleError(error, params.loader[0]);
+      await this.loading.showLoading(false);
+    } finally {
+      await this.loading.showLoading(false);
+    }
+    return response;
+  }
+
 }

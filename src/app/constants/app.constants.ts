@@ -15,8 +15,10 @@ export class AppConstants {
     public static API_ENDPOINTS = {
         LOGIN:  'login',
         CREATE_USER: 'users',
+        EXPENSE: 'expense',
         PRINCIPAL: 'principal',
         RECOVERY_PASSWORD: 'recovery-password',
+        TRAVELS: 'travels'
     };
 
     public static STORAGE_NAMES = {
