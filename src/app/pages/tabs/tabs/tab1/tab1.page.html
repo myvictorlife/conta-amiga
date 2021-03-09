@@ -20,8 +20,8 @@
     <ion-card *ngFor="let travel of travels">
       <ion-card-content (click)="selectTravel(travel)">
         <span>{{ travel.title }} </span><br/>
-        <span>{{ travel.startDate |  date:'dd mm yyyy' }}</span> to
-        <span>{{ travel.dateEnd | date:'dd mm yyyy' }} </span>
+        <span>{{ travel.startDate | date: 'dd/MM/YYYY' }} </span> to
+        <span>{{ travel.endDate | date: 'dd/MM/YYYY' }} </span>
       </ion-card-content>
     </ion-card>
   </div>

@@ -34,4 +34,8 @@ export class Tab2Page {
     this.router.navigate(['travels/add']);
   }
 
+  refreshService() {
+    this.ngOnInit();
+  }
+
 }

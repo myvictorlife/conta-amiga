@@ -16,12 +16,15 @@
 
   <div>
     <h4 class="ion-padding">Minhas Viagens</h4>
-    <ion-card *ngFor="let travel of travels">
+    <ion-card *ngFor="let travel of travels" [disabled]="travel.status !== 'ATIVA'">
       <ion-card-content (click)="redirectToTravelDetails(travel)">
         <span>{{ travel.title }} </span><br/>
-        <span>{{ travel.start_date }} </span> to
-        <span>{{ travel.end_date }} </span>
+        <span>{{ travel.startDate | date: 'dd/MM/YYYY' }} </span> to
+        <span>{{ travel.endDate | date: 'dd/MM/YYYY' }} </span>
       </ion-card-content>
     </ion-card>
   </div>
+  <ion-button (click)="refreshService()" expand="block">
+    Atualizar
+  </ion-button>
 </ion-content>
