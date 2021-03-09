@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: TravelsPage
+  },  {
+    path: 'add',
+    loadChildren: () => import('./add/add.module').then( m => m.AddPageModule)
   }
+
 ];
 
 @NgModule({

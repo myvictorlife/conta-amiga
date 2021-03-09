@@ -30,4 +30,8 @@ export class Tab2Page {
     this.router.navigate(['tabs/tab2/travel-details'], navigationExtras);
   }
 
+  createTravel() {
+    this.router.navigate(['travels/add']);
+  }
+
 }

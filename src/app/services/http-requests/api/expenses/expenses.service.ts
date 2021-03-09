@@ -65,7 +65,7 @@ export class ExpensesService {
     let response: any = null;
     try {
       const token = localStorage.getItem(this.appConstants.STORAGE_NAMES.USER_TOKEN);
-      response = await this.http.get(AppConstants.API_ENDPOINTS.TRAVELS, {}, { headers: new HttpHeaders({ 'x-token': token }) });
+      response = await this.http.get(AppConstants.API_ENDPOINTS.TRAVELS_USERS, {}, { headers: new HttpHeaders({ 'x-token': token }) });
       response = response.data;
     } catch (error) {
       console.warn('ExpenseService - get travels: ', error);

@@ -31,11 +31,11 @@ export class LoginPage implements OnInit {
     private authService: AuthService
   ) {
     this.loginForm = new FormGroup({
-      'email': new FormControl('pablo@pablo.com', Validators.compose([
+      'email': new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
-      'password': new FormControl('pablo', Validators.compose([
+      'password': new FormControl('', Validators.compose([
         Validators.minLength(5),
         Validators.required
       ]))

@@ -18,7 +18,8 @@ export class AppConstants {
         EXPENSE: 'expense',
         PRINCIPAL: 'principal',
         RECOVERY_PASSWORD: 'recovery-password',
-        TRAVELS: 'travels'
+        TRAVELS: 'travels',
+        TRAVELS_USERS: 'travels/users'
     };
 
     public static STORAGE_NAMES = {

@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Adicionar Viagem</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="newTravelForm" (ngSubmit)="createNewTravel()">
+    <ion-list class="inputs-list" lines="full">
+      
+      <ion-item class="input-item">
+        <ion-input type="text" placeholder="Titulo" formControlName="title" clearInput autocapitalize="off" inputmode="title"></ion-input>
+      </ion-item>
+      <div class="error-container">
+        <ng-container *ngFor="let validation of validation_messages.title">
+          <div class="error-message" *ngIf="newTravelForm.get('title').hasError(validation.type) && (newTravelForm.get('title').dirty || newTravelForm.get('title').touched)">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>{{ validation.message }}</span>
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item class="input-item">
+        <ion-input type="text" placeholder="Descrição da viagem" formControlName="description" clearInput autocapitalize="off" inputmode="description"></ion-input>
+      </ion-item>
+      <div class="error-container">
+        <ng-container *ngFor="let validation of validation_messages.description">
+          <div class="error-message" *ngIf="newTravelForm.get('description').hasError(validation.type) && (newTravelForm.get('description').dirty || newTravelForm.get('description').touched)">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>{{ validation.message }}</span>
+          </div>
+        </ng-container>
+      </div>
+      
+      <ion-item class="input-item">
+        <!-- <ion-input type="text" placeholder="Data de inicio"  clearInput autocapitalize="off" inputmode="startDate"></ion-input> -->
+        <ion-datetime formControlName="startDate" placeholder="Data de inicio" displayFormat="DD/MM/YYYY"></ion-datetime>
+      </ion-item>
+      <div class="error-container">
+        <ng-container *ngFor="let validation of validation_messages.startDate">
+          <div class="error-message" *ngIf="newTravelForm.get('startDate').hasError(validation.type) && (newTravelForm.get('startDate').dirty || newTravelForm.get('startDate').touched)">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>{{ validation.message }}</span>
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item class="input-item">
+        <ion-datetime formControlName="endDate"  pickerFormat="D/M/YYYY" placeholder="Data Fim" displayFormat="DD/MM/YYYY"></ion-datetime>
+      </ion-item>
+      <div class="error-container">
+        <ng-container *ngFor="let validation of validation_messages.endDate">
+          <div class="error-message" *ngIf="newTravelForm.get('endDate').hasError(validation.type) && (newTravelForm.get('endDate').dirty || newTravelForm.get('endDate').touched)">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>{{ validation.message }}</span>
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item class="input-item">
+        <ion-input type="text" placeholder="Senha" formControlName="password" clearInput autocapitalize="off" inputmode="password"></ion-input>
+      </ion-item>
+      <div class="error-container">
+        <ng-container *ngFor="let validation of validation_messages.password">
+          <div class="error-message" *ngIf="newTravelForm.get('password').hasError(validation.type) && (newTravelForm.get('password').dirty || newTravelForm.get('password').touched)">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>{{ validation.message }}</span>
+          </div>
+        </ng-container>
+      </div>
+
+    </ion-list>
+
+    <ion-button class="signup-btn" type="submit" expand="block" [disabled]="!newTravelForm.valid">Cadastrar Viagem</ion-button>
+  </form>
+</ion-content>
