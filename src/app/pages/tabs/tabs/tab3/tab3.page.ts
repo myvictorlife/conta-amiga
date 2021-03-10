@@ -41,7 +41,7 @@ export class Tab3Page implements OnInit {
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Prompt!',
+      header: 'Link user a nova viagem',
       inputs: [
         {
           name: 'idTravel',
