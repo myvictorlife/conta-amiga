@@ -32,9 +32,11 @@ public handleErrorCallback = (error: Response, params: any, callback: any) => {
         error: error,
       });
     } else {
+      const errorMessage: any = error;
+      const subTitle = errorMessage.error?.mesageError;
       this.alert.showBasic({
         title: 'Error ' + error.status,
-        subTitle: 'Sorry, try later...',
+        subTitle: !subTitle ? 'Sorry, try later...' : subTitle,
         button: {
             text: 'OK',
             callback: () => { },

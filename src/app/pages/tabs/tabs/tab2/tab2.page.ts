@@ -24,7 +24,7 @@ export class Tab2Page {
   redirectToTravelDetails(travel) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
-        travel: JSON.stringify(travel)
+        travelId: travel.id
       }
     };
     this.router.navigate(['tabs/tab2/travel-details'], navigationExtras);

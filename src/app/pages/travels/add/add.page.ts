@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TravelService } from 'src/app/services/http-requests/api/travel/travel.service';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-add',
   templateUrl: './add.page.html',
@@ -24,7 +24,8 @@ export class AddPage implements OnInit {
   };
   constructor(
     private travelService: TravelService,
-    public toastController: ToastController
+    public toastController: ToastController,
+    public alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -59,5 +60,4 @@ export class AddPage implements OnInit {
     });
     toast.present();
   }
-
 }

@@ -9,12 +9,34 @@
 
 <ion-content>
 
-  <ion-card>
-    <ion-card-content>
-      <span>{{ travel.title }} </span><br/>
-      <span>{{ travel.start_date }} </span> to
-      <span>{{ travel.end_date }} </span>
-    </ion-card-content>
-  </ion-card>
+  <div *ngIf="travel">
+    <ion-card>
+      <ion-card-content>
+        <span>Código {{ travel.id }} </span><br/>
+        <span>{{ travel.title }} </span><br/>
+        <span>{{ travel.description }} </span><br/>
+        <span>{{ travel.startDate | date: 'dd/MM/YYYY' }} </span> to
+        <span>{{ travel.endDate | date: 'dd/MM/YYYY' }} </span><br/>
+        <span>Status: {{ travel.status }} </span><br/>
+      </ion-card-content>
+    </ion-card>
+
+    <div *ngIf="travel.expenses">
+      <ion-card color="warning">
+        <ion-card-content>
+          <span>Despesas</span><br/>
+        </ion-card-content>
+      </ion-card>
+      <ion-card *ngFor="let expense of travel.expenses">
+        <ion-card-content>
+          <span>Despesas</span><br/>
+          <span>{{ expense.title }} </span><br/>
+          <span>PayingUser: {{ expense.payingUser }} </span><br/>
+          <span>Valor: {{ expense.value }} </span><br/>
+          <span>Total: {{ expense.amout }} </span><br/>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 
 </ion-content>

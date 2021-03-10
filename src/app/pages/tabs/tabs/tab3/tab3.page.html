@@ -13,15 +13,33 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-row class="user-details-section">
-    <ion-list>
-      <ion-item>
-        <ion-thumbnail slot="start">
-          <ion-img [src]="'https://tinypng.com/images/apng/panda-waving-2x.png'"></ion-img>
-        </ion-thumbnail>
-        <ion-label>{{profile.name}}</ion-label>
-      </ion-item>
-    </ion-list>
-  </ion-row>
-  <ion-button color="danger" (click)="logout()">Danger</ion-button>
+  <div *ngIf="profile">
+    <ion-row class="user-details-section">
+      <ion-list>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <ion-img [src]="'https://tinypng.com/images/apng/panda-waving-2x.png'"></ion-img>
+          </ion-thumbnail>
+          <ion-label>{{profile.name}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-row>
+    <ion-item-divider>
+      <ion-label>
+        Email: {{ profile.email }}
+      </ion-label>
+    </ion-item-divider>
+    <ion-item-divider>
+      <ion-label>
+        Phone: {{ profile.phone }}
+      </ion-label>
+    </ion-item-divider>
+    <ion-item-divider>
+      <ion-label>
+        Total de viagens: {{ profile.travels.length }}
+      </ion-label>
+    </ion-item-divider>
+  </div>
+  <ion-button color="primary" (click)="linkUserATravel()">Entrar em uma viagem</ion-button>
+  <ion-button color="danger" (click)="logout()">Sair</ion-button>
 </ion-content>
